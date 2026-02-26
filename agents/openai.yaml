@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "B站（Bilibili）名师视频学习技能"
+  short_description: "名师视频字幕与教案听课"
+  default_prompt: "请把这个B站名师视频链接转成原始字幕、对话稿、教案（V3）和学习者视角听课记录。"
