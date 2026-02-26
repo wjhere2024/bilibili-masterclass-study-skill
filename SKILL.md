@@ -96,6 +96,18 @@ How to fix:
 - Add proper punctuation; remove subtitle artifacts
 - Do NOT change the actual words spoken
 
+## Time Range Filtering
+
+The script supports `--start` and `--end` parameters to process only a portion of the video:
+```bash
+python scripts/process_bilibili_dialogue.py <BV_ID> --outdir <workspace_root> --start 0 --end 4800
+```
+- `--start`: start time in seconds (default: 0)
+- `--end`: end time in seconds (default: 0 = entire video)
+- Subtitle items are filtered by their `from` timestamp (inclusive start, exclusive end)
+
+This is useful when processing only a portion of a video (e.g., used by `bilibili-mixed-training` skill for mixed-content videos).
+
 ## Notes
 - Subtitle source uses `x/v2/dm/view` for better consistency.
 - If subtitle is missing, return a clear error and ask for another video.
@@ -103,3 +115,4 @@ How to fix:
 - The `通顺增强对话稿.txt` uses rule-based speaker labelling — attribution may occasionally be wrong. Use judgment when quoting.
 - All output files go to `bili_temp/<base_name>/` where `<base_name>` is a Chinese name derived from the video title.
 - This skill is designed to work with any LLM that can follow instructions, read files, and write files.
+- For mixed-content videos (classroom + lecture), use `bilibili-mixed-training` skill instead.

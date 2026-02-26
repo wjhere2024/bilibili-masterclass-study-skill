@@ -163,6 +163,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch Bilibili subtitle and generate smooth dialogue transcript.")
     parser.add_argument("input", help="BV id or bilibili video URL")
     parser.add_argument("--outdir", default=".", help="output root dir (default: current dir)")
+    parser.add_argument("--start", type=float, default=0, help="start time in seconds (default: 0)")
+    parser.add_argument("--end", type=float, default=0, help="end time in seconds (default: 0 = entire video)")
     args = parser.parse_args()
 
     bvid = parse_bvid(args.input)
@@ -177,6 +179,9 @@ def main() -> None:
     cid = pages[0]["cid"]
     subtitle_url = get_subtitle_url(cid, cookie)
     subtitle_body = fetch_subtitle_body(subtitle_url)
+    if args.start > 0 or args.end > 0:
+        end = args.end if args.end > 0 else float("inf")
+        subtitle_body = [x for x in subtitle_body if x.get("from", 0) >= args.start and x.get("from", 0) < end]
     raw_lines = [str(x.get("content", "")).strip() for x in subtitle_body if str(x.get("content", "")).strip()]
     if not raw_lines:
         raise RuntimeError("Subtitle body is empty.")
