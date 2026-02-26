@@ -3,12 +3,9 @@
 用于将 B 站名师视频自动转成可教学使用的结构化文本。
 
 ## 功能
-- 提取视频字幕（原始文本）
-- 生成说话人标注稿（老师/学生/全班）
-- 生成逐字稿增强版、通顺增强版对话稿
-- 可选生成：
-  - 教案（V3，含课堂实录时段）
-  - 听课记录（学习者视角，含教学智慧与可迁移做法）
+- 生成通顺增强版对话稿
+- 生成教案（含课堂实录时段）
+- 生成听课记录（学习者视角，含教学智慧与可迁移做法）
 
 ## 目录结构
 - `SKILL.md`：技能说明
@@ -26,27 +23,23 @@ pip install requests
 ```
 
 ## 使用方式
-### 1) 基础输出（字幕 + 对话稿）
+### 生成三个成品（固定输出）
 
 ```bash
 python scripts/process_bilibili_dialogue.py "<BV号或B站链接>" --outdir .
 ```
 
-### 2) 额外生成教案与听课记录
-
-```bash
-python scripts/process_bilibili_dialogue.py "<BV号或B站链接>" --outdir . --extras lesson-plan,observation-note
-```
-
 ## 输出文件
-脚本会在 `bili_temp/<BV_ID>/` 下生成：
+脚本会在 `bili_temp/<BV_ID>/` 下生成（中文文件名）：
 
-- `<BV_ID>_transcript_dmview.txt`
-- `<BV_ID>_transcript_speaker_labeled.txt`
-- `<BV_ID>_dialogue_verbatim_enhanced.txt`
-- `<BV_ID>_dialogue_verbatim_smooth.txt`
-- `<BV_ID>_lesson_plan.txt`（可选）
-- `<BV_ID>_observation_note.txt`（可选）
+- `<视频标题提炼名>通顺增强对话稿.txt`
+- `<视频标题提炼名>教案.md`
+- `<视频标题提炼名>听课记录.md`
+
+示例：
+- `吴正宪曹冲称象通顺增强对话稿.txt`
+- `吴正宪曹冲称象教案.md`
+- `吴正宪曹冲称象听课记录.md`
 
 ## 说明
 - 说话人标注采用规则推断，可能存在少量误判。
